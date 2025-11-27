@@ -1,0 +1,85 @@
+@model ContactFormModel
+@{
+    ViewData["Title"] = "Contact Us";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="mb-4">@ViewData["Title"]</h1>
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <partial name="_Alert" model="@((TempData["SuccessMessage"]!.ToString()!, "success", true))" />
+            }
+
+            <div class="card shadow">
+                <div class="card-body p-4">
+                    <form asp-action="Index" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label"></label>
+                            <input asp-for="Name" class="form-control" placeholder="Enter your full name" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label"></label>
+                            <input asp-for="Email" class="form-control" type="email" placeholder="Enter your email address" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Phone" class="form-label"></label>
+                            <input asp-for="Phone" class="form-control" type="tel" placeholder="Enter your phone number (optional)" />
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Subject" class="form-label"></label>
+                            <select asp-for="Subject" class="form-select">
+                                <option value="">-- Select a subject --</option>
+                                <option value="General Inquiry">General Inquiry</option>
+                                <option value="Technical Support">Technical Support</option>
+                                <option value="Sales Question">Sales Question</option>
+                                <option value="Feedback">Feedback</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <span asp-validation-for="Subject" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Message" class="form-label"></label>
+                            <textarea asp-for="Message" class="form-control" rows="5" placeholder="Enter your message"></textarea>
+                            <span asp-validation-for="Message" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Form Tag Helpers Used</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="mb-0">
+                        <li><code>asp-action</code> - Specifies the action method</li>
+                        <li><code>asp-for</code> - Binds input to model property</li>
+                        <li><code>asp-validation-for</code> - Displays validation messages</li>
+                        <li><code>asp-validation-summary</code> - Displays model-level validation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

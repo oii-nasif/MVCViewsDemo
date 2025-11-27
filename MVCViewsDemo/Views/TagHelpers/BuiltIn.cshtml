@@ -1,0 +1,196 @@
+@{
+    ViewData["Title"] = "Built-in Tag Helpers";
+    var categories = new List<string> { "Electronics", "Furniture", "Books", "Clothing" };
+}
+
+<div class="container">
+    <h1 class="mb-4">@ViewData["Title"]</h1>
+
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Index">Tag Helpers</a></li>
+            <li class="breadcrumb-item active">Built-in</li>
+        </ol>
+    </nav>
+
+    <!-- Anchor Tag Helper -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Anchor Tag Helper</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Examples:</h6>
+                    <ul>
+                        <li><a asp-controller="Home" asp-action="Index">Home Page</a></li>
+                        <li><a asp-controller="Products" asp-action="Details" asp-route-id="1">Product #1</a></li>
+                        <li><a asp-controller="Products" asp-action="ByCategory" asp-route-category="Electronics">Electronics Category</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h6>Code:</h6>
+                    <pre class="bg-light p-2 rounded small"><code>&lt;a asp-controller="Home" asp-action="Index"&gt;Home&lt;/a&gt;
+&lt;a asp-controller="Products" asp-action="Details"
+   asp-route-id="1"&gt;Product #1&lt;/a&gt;</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Tag Helpers -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Form Tag Helpers</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Example Form:</h6>
+                    <form asp-controller="Contact" asp-action="Index" method="post" class="border p-3 rounded">
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" placeholder="Enter name" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Category</label>
+                            <select class="form-select">
+                                <option value="">Select...</option>
+                                @foreach (var cat in categories)
+                                {
+                                    <option value="@cat">@cat</option>
+                                }
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary" disabled>Submit (Demo Only)</button>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <h6>Code:</h6>
+                    <pre class="bg-light p-2 rounded small"><code>&lt;form asp-controller="Contact"
+      asp-action="Index"
+      method="post"&gt;
+
+    &lt;input asp-for="Name" /&gt;
+    &lt;span asp-validation-for="Name"&gt;&lt;/span&gt;
+
+    &lt;select asp-for="Category"
+            asp-items="@@categories"&gt;
+    &lt;/select&gt;
+
+    &lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Environment Tag Helper -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Environment Tag Helper</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Current Environment:</h6>
+                    <environment include="Development">
+                        <div class="alert alert-warning">
+                            <strong>Development Mode</strong> - Debug features enabled
+                        </div>
+                    </environment>
+                    <environment exclude="Development">
+                        <div class="alert alert-success">
+                            <strong>Production Mode</strong> - Optimized for performance
+                        </div>
+                    </environment>
+                </div>
+                <div class="col-md-6">
+                    <h6>Code:</h6>
+                    <pre class="bg-light p-2 rounded small"><code>&lt;environment include="Development"&gt;
+    Debug Mode Active
+&lt;/environment&gt;
+
+&lt;environment exclude="Development"&gt;
+    Production Mode
+&lt;/environment&gt;</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Tag Helper -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Image Tag Helper</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Example:</h6>
+                    <p>The <code>asp-append-version</code> attribute adds a hash of the file content to the URL for cache busting:</p>
+                    <img src="~/favicon.ico" asp-append-version="true" alt="Favicon" class="border" />
+                </div>
+                <div class="col-md-6">
+                    <h6>Code:</h6>
+                    <pre class="bg-light p-2 rounded small"><code>&lt;img src="~/images/logo.png"
+     asp-append-version="true"
+     alt="Logo" /&gt;
+
+&lt;!-- Renders as: --&gt;
+&lt;img src="/images/logo.png?v=abc123..."
+     alt="Logo" /&gt;</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link and Script Tag Helpers -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Link & Script Tag Helpers</h5>
+        </div>
+        <div class="card-body">
+            <pre class="bg-light p-3 rounded"><code>&lt;!-- With version hash for cache busting --&gt;
+&lt;link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /&gt;
+&lt;script src="~/js/site.js" asp-append-version="true"&gt;&lt;/script&gt;
+
+&lt;!-- Fallback for CDN --&gt;
+&lt;script src="https://cdn.example.com/jquery.min.js"
+        asp-fallback-src="~/lib/jquery/jquery.min.js"
+        asp-fallback-test="window.jQuery"&gt;
+&lt;/script&gt;</code></pre>
+        </div>
+    </div>
+
+    <!-- Partial Tag Helper -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Partial Tag Helper</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Ways to render partials:</h6>
+                    <pre class="bg-light p-2 rounded small"><code>&lt;!-- Partial Tag Helper (recommended) --&gt;
+&lt;partial name="_Alert" model="@@alertModel" /&gt;
+
+&lt;!-- HTML Helper method --&gt;
+@@await Html.PartialAsync("_Alert", alertModel)
+
+&lt;!-- Render in place --&gt;
+@@{ await Html.RenderPartialAsync("_Alert"); }</code></pre>
+                </div>
+                <div class="col-md-6">
+                    <h6>Example Output:</h6>
+                    <partial name="_Alert" model="@(("This is a partial view!", "info", true))" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="Index" class="btn btn-outline-secondary">&larr; Back to Overview</a>
+        <a asp-action="Custom" class="btn btn-success">Custom Tag Helpers &rarr;</a>
+    </div>
+</div>

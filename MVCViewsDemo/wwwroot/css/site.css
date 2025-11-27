@@ -8,6 +8,12 @@ html {
   }
 }
 
+@media (min-width: 1200px) {
+  html {
+    font-size: 18px;
+  }
+}
+
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
@@ -19,4 +25,158 @@ html {
 
 body {
   margin-bottom: 60px;
+}
+
+/* Form Styling */
+.form-control:focus {
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.form-select:focus {
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Validation styling */
+.field-validation-error {
+  color: #dc3545;
+  font-size: 0.875rem;
+}
+
+.input-validation-error {
+  border-color: #dc3545;
+}
+
+.validation-summary-errors {
+  color: #dc3545;
+}
+
+.validation-summary-errors ul {
+  margin-bottom: 0;
+  padding-left: 1.25rem;
+}
+
+/* Footer */
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px;
+}
+
+/* Sidebar */
+.sidebar {
+  position: sticky;
+  top: 70px;
+  height: calc(100vh - 130px);
+  padding-top: 1rem;
+  overflow-y: auto;
+}
+
+.sidebar .nav-link {
+  padding: 0.5rem 1rem;
+  color: #333;
+}
+
+.sidebar .nav-link:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 0.25rem;
+}
+
+.sidebar .nav-link.active {
+  color: #0d6efd;
+  background-color: rgba(13, 110, 253, 0.1);
+  border-radius: 0.25rem;
+  font-weight: 600;
+}
+
+/* Card improvements */
+.card {
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+/* Code blocks */
+pre {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 0.375rem;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+pre code {
+  font-size: 0.875rem;
+  color: #212529;
+}
+
+/* Badge spacing in inline contexts */
+.badge + .badge {
+  margin-left: 0.25rem;
+}
+
+/* Navbar dropdown improvements */
+.dropdown-menu {
+  border: none;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-item:hover {
+  background-color: rgba(13, 110, 253, 0.1);
+}
+
+/* Product card specific */
+.card-img-top {
+  object-fit: cover;
+}
+
+/* Alert improvements */
+.alert {
+  border: none;
+  border-radius: 0.5rem;
+}
+
+/* Progress bar container */
+.progress {
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+/* Table improvements */
+.table th {
+  font-weight: 600;
+  background-color: #f8f9fa;
+}
+
+/* Breadcrumb styling */
+.breadcrumb {
+  background-color: transparent;
+  padding: 0;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: "›";
+}
+
+/* Responsive utilities */
+@media (max-width: 767.98px) {
+  .sidebar {
+    position: relative;
+    height: auto;
+    padding-top: 0;
+  }
+
+  .footer {
+    position: relative;
+    margin-top: 2rem;
+  }
+
+  body {
+    margin-bottom: 0;
+  }
 }

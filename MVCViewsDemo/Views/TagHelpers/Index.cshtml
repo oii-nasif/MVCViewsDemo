@@ -1,0 +1,109 @@
+@{
+    ViewData["Title"] = "Tag Helpers Overview";
+}
+
+<div class="container">
+    <h1 class="mb-4">@ViewData["Title"]</h1>
+
+    <div class="alert alert-info">
+        <strong>What are Tag Helpers?</strong>
+        Tag Helpers enable server-side code to participate in creating and rendering HTML elements in Razor files.
+        They provide an HTML-friendly development experience while retaining the power of Razor.
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Built-in Tag Helpers</h5>
+                </div>
+                <div class="card-body">
+                    <p>ASP.NET Core provides many built-in Tag Helpers for common scenarios:</p>
+                    <ul>
+                        <li><strong>Anchor Tag Helper</strong> - <code>asp-controller</code>, <code>asp-action</code></li>
+                        <li><strong>Form Tag Helper</strong> - <code>asp-action</code>, <code>asp-controller</code></li>
+                        <li><strong>Input Tag Helper</strong> - <code>asp-for</code></li>
+                        <li><strong>Label Tag Helper</strong> - <code>asp-for</code></li>
+                        <li><strong>Select Tag Helper</strong> - <code>asp-for</code>, <code>asp-items</code></li>
+                        <li><strong>Validation Tag Helpers</strong> - <code>asp-validation-for</code>, <code>asp-validation-summary</code></li>
+                        <li><strong>Environment Tag Helper</strong> - <code>&lt;environment&gt;</code></li>
+                        <li><strong>Image Tag Helper</strong> - <code>asp-append-version</code></li>
+                        <li><strong>Link/Script Tag Helpers</strong> - <code>asp-append-version</code></li>
+                    </ul>
+                    <a asp-action="BuiltIn" class="btn btn-primary">
+                        View Built-in Examples &rarr;
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Custom Tag Helpers</h5>
+                </div>
+                <div class="card-body">
+                    <p>Create your own Tag Helpers by inheriting from <code>TagHelper</code>:</p>
+                    <ul>
+                        <li><strong>AlertTagHelper</strong> - Bootstrap alert component</li>
+                        <li><strong>BadgeTagHelper</strong> - Bootstrap badge component</li>
+                        <li><strong>EmailTagHelper</strong> - Mailto link generator</li>
+                        <li><strong>ProgressBarTagHelper</strong> - Progress bar component</li>
+                        <li><strong>TimeAgoTagHelper</strong> - Human-friendly date display</li>
+                    </ul>
+                    <a asp-action="Custom" class="btn btn-success">
+                        View Custom Examples &rarr;
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5 class="mb-0">Tag Helpers vs HTML Helpers</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6 class="text-primary">Tag Helpers</h6>
+                    <pre class="bg-light p-3 rounded"><code>&lt;a asp-controller="Home"
+   asp-action="Index"&gt;
+    Home
+&lt;/a&gt;</code></pre>
+                </div>
+                <div class="col-md-6">
+                    <h6 class="text-secondary">HTML Helpers</h6>
+                    <pre class="bg-light p-3 rounded"><code>@@Html.ActionLink(
+    "Home",
+    "Index",
+    "Home"
+)</code></pre>
+                </div>
+            </div>
+
+            <h6 class="mt-4">Benefits of Tag Helpers:</h6>
+            <ul>
+                <li>HTML-friendly syntax that works with HTML editors</li>
+                <li>Rich IntelliSense support</li>
+                <li>More readable code that looks like standard HTML</li>
+                <li>Easier for designers to work with</li>
+                <li>Server-side attributes distinguish them from regular HTML</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5 class="mb-0">Registering Tag Helpers</h5>
+        </div>
+        <div class="card-body">
+            <p>Tag Helpers are registered in <code>_ViewImports.cshtml</code>:</p>
+            <pre class="bg-light p-3 rounded"><code>@@* Built-in ASP.NET Core Tag Helpers *@@
+@@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@@* Custom Tag Helpers from this assembly *@@
+@@addTagHelper *, MVCViewsDemo</code></pre>
+        </div>
+    </div>
+</div>

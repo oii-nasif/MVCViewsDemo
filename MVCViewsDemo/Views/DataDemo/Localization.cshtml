@@ -1,0 +1,134 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = "Localization Demo";
+}
+
+<div class="container">
+    <h1 class="mb-4">@ViewData["Title"]</h1>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Localized Content</h5>
+                </div>
+                <div class="card-body">
+                    <h2>@Localizer["Welcome"]</h2>
+                    <p class="lead">@Localizer["Greeting"]</p>
+                    <p><strong>@Localizer["CurrentLanguage"]</strong></p>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">How to Test Localization</h5>
+                </div>
+                <div class="card-body">
+                    <p>Add the culture parameter to the URL to switch languages:</p>
+                    <ul>
+                        <li>
+                            <a href="?culture=en">English</a> -
+                            <code>?culture=en</code>
+                        </li>
+                        <li>
+                            <a href="?culture=bn">Bengali (বাংলা)</a> -
+                            <code>?culture=bn</code>
+                        </li>
+                    </ul>
+
+                    <div class="alert alert-info mt-3">
+                        <strong>Note:</strong> The request localization middleware reads the culture from:
+                        <ol class="mb-0">
+                            <li>Query string (<code>?culture=bn</code>)</li>
+                            <li>Cookie</li>
+                            <li>Accept-Language header</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Implementation Details</h5>
+                </div>
+                <div class="card-body">
+                    <h6>1. Program.cs Configuration</h6>
+                    <pre class="bg-light p-3 rounded"><code>// Add localization services
+builder.Services.AddLocalization(options =>
+    options.ResourcesPath = "Resources");
+builder.Services.AddMvc().AddViewLocalization();
+
+// Configure supported cultures
+var supportedCultures = new[] {
+    new CultureInfo("en"),
+    new CultureInfo("bn")
+};
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("en"),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures
+});</code></pre>
+
+                    <h6 class="mt-4">2. Resource Files</h6>
+                    <ul>
+                        <li><code>Resources/Views/DataDemo/Localization.en.resx</code></li>
+                        <li><code>Resources/Views/DataDemo/Localization.bn.resx</code></li>
+                    </ul>
+
+                    <h6 class="mt-4">3. View Usage</h6>
+                    <pre class="bg-light p-3 rounded"><code>@@using Microsoft.AspNetCore.Mvc.Localization
+@@inject IViewLocalizer Localizer
+
+&lt;h2&gt;@@Localizer["Welcome"]&lt;/h2&gt;
+&lt;p&gt;@@Localizer["Greeting"]&lt;/p&gt;</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h5>Quick Language Switch</h5>
+                    <div class="d-grid gap-2">
+                        <a href="?culture=en" class="btn btn-outline-primary">
+                            English
+                        </a>
+                        <a href="?culture=bn" class="btn btn-outline-primary">
+                            বাংলা (Bengali)
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h5>Resource Keys</h5>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Key</th>
+                                <th>Usage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>Welcome</code></td>
+                                <td>Page title</td>
+                            </tr>
+                            <tr>
+                                <td><code>Greeting</code></td>
+                                <td>Welcome message</td>
+                            </tr>
+                            <tr>
+                                <td><code>CurrentLanguage</code></td>
+                                <td>Language indicator</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

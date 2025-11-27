@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MVCViewsDemo.styles.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
     <header>
@@ -23,22 +24,70 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="dataDemoDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Data Demo
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dataDemoDropdown">
+                                <li><a class="dropdown-item" asp-controller="DataDemo" asp-action="Index">ViewData/ViewBag</a></li>
+                                <li><a class="dropdown-item" asp-controller="DataDemo" asp-action="FirstPage">TempData Demo</a></li>
+                                <li><a class="dropdown-item" asp-controller="DataDemo" asp-action="Localization">Localization</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="tagHelpersDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Tag Helpers
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="tagHelpersDropdown">
+                                <li><a class="dropdown-item" asp-controller="TagHelpers" asp-action="Index">Overview</a></li>
+                                <li><a class="dropdown-item" asp-controller="TagHelpers" asp-action="BuiltIn">Built-In</a></li>
+                                <li><a class="dropdown-item" asp-controller="TagHelpers" asp-action="Custom">Custom</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Contact" asp-action="Index">Contact</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        @await RenderSectionAsync("NavItems", required: false)
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <div class="container-fluid">
+        <div class="row">
+            @if (IsSectionDefined("Sidebar"))
+            {
+                <aside class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+                    @await RenderSectionAsync("Sidebar", required: false)
+                </aside>
+                <main role="main" class="col-md-9 col-lg-10 px-md-4 pb-3">
+                    @RenderBody()
+                </main>
+            }
+            else
+            {
+                <main role="main" class="col-12 pb-3">
+                    @RenderBody()
+                </main>
+            }
+        </div>
     </div>
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - MVCViewsDemo - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            @if (IsSectionDefined("Footer"))
+            {
+                @await RenderSectionAsync("Footer", required: false)
+            }
+            else
+            {
+                <text>&copy; 2025 - MVCViewsDemo - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></text>
+            }
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

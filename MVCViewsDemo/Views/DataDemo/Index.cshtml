@@ -1,0 +1,140 @@
+@{
+    ViewData["Title"] = "ViewData & ViewBag Demo";
+    var numbers = ViewData["Numbers"] as List<int> ?? new List<int>();
+}
+
+<div class="container">
+    <h1 class="mb-4">@ViewData["Title"]</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">ViewData Examples</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>About ViewData:</strong></p>
+                    <ul class="text-muted small">
+                        <li>Dictionary-based (ViewDataDictionary)</li>
+                        <li>Requires type casting when reading</li>
+                        <li>Key-value pair storage</li>
+                        <li>Available only for current request</li>
+                    </ul>
+                    <hr />
+
+                    <p><strong>Message:</strong> @ViewData["Message"]</p>
+                    <p><strong>Current Time:</strong> @ViewData["CurrentTime"]</p>
+
+                    <p><strong>Numbers List:</strong></p>
+                    <div class="d-flex gap-2 flex-wrap">
+                        @foreach (var num in numbers)
+                        {
+                            <span class="badge bg-primary">@num</span>
+                        }
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <small class="text-muted">
+                        <strong>Controller Code:</strong><br />
+                        <code>ViewData["Message"] = "Hello";</code><br />
+                        <code>ViewData["Numbers"] = new List&lt;int&gt; { 1, 2, 3 };</code>
+                    </small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">ViewBag Examples</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>About ViewBag:</strong></p>
+                    <ul class="text-muted small">
+                        <li>Dynamic wrapper around ViewData</li>
+                        <li>No type casting needed (dynamic)</li>
+                        <li>Cleaner syntax for property access</li>
+                        <li>Available only for current request</li>
+                    </ul>
+                    <hr />
+
+                    <p><strong>Welcome Message:</strong> @ViewBag.WelcomeMessage</p>
+
+                    <p><strong>User Info:</strong></p>
+                    <ul>
+                        <li>Name: @ViewBag.User?.Name</li>
+                        <li>Email: @ViewBag.User?.Email</li>
+                    </ul>
+
+                    <p><strong>Colors:</strong></p>
+                    <div class="d-flex gap-2 flex-wrap">
+                        @if (ViewBag.Colors != null)
+                        {
+                            foreach (var color in ViewBag.Colors)
+                            {
+                                <span class="badge bg-success">@color</span>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <small class="text-muted">
+                        <strong>Controller Code:</strong><br />
+                        <code>ViewBag.WelcomeMessage = "Hello";</code><br />
+                        <code>ViewBag.User = new { Name = "John" };</code>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0">ViewData vs ViewBag Comparison</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Feature</th>
+                        <th>ViewData</th>
+                        <th>ViewBag</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Type</td>
+                        <td>ViewDataDictionary</td>
+                        <td>dynamic</td>
+                    </tr>
+                    <tr>
+                        <td>Casting Required</td>
+                        <td>Yes</td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td>Compile-time checking</td>
+                        <td>No</td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td>IntelliSense</td>
+                        <td>No</td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td>Lifetime</td>
+                        <td>Current request only</td>
+                        <td>Current request only</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="FirstPage" class="btn btn-warning">
+            Try TempData Demo &rarr;
+        </a>
+    </div>
+</div>
