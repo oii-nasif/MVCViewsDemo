@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Localization;
+using Serilog;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSerilog();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -25,9 +28,9 @@ app.UseHttpsRedirection();
 // Configure request localization
 var supportedCultures = new[]
 {
-    new CultureInfo("en"),
-    new CultureInfo("bn")
-};
+        new CultureInfo("en"),
+        new CultureInfo("bn")
+    };
 
 app.UseRequestLocalization(new RequestLocalizationOptions
 {
@@ -46,4 +49,16 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run();
+
+try
+{
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
+}
